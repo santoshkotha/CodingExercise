@@ -184,7 +184,7 @@ public class ExpenseCalculator
 	public static void main( String[] args )
     {
 		ExpenseCalculator expenseCalc = new ExpenseCalculator();
-		Map<String, IncomeTO> monthlyExpenses = new LinkedHashMap<>();
+		Map<String, IncomeTO> monthlyExpenses = new LinkedHashMap<String, IncomeTO>();
 		List<AggregatedTO> aggregated = new ArrayList<AggregatedTO>();
 		ResponseTO response = expenseCalc.getTransactions();
 		System.out.println("Hello..! Welcome to Expense Calculator. \n Please select any one option from Below to proceed Ahead");
