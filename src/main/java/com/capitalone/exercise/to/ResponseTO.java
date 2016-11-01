@@ -1,5 +1,6 @@
 package com.capitalone.exercise.to;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseTO {
@@ -8,6 +9,10 @@ public class ResponseTO {
 	private List<TransactionsTO> transactions;
 	
 	public List<TransactionsTO> getTransactions() {
+		if(transactions == null)
+		{
+			transactions = new ArrayList<TransactionsTO>();
+		}
 		return transactions;
 	}
 	public void setTransactions(List<TransactionsTO> transactions) {

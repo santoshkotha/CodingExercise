@@ -1,19 +1,10 @@
 package com.capitalone.exercise;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +45,7 @@ public class ExpenseCalculator
 			String output = response.getEntity(String.class);
 			responseTo = mapper.readValue(output, ResponseTO.class);
 		  }  catch (Exception e) {
-			e.printStackTrace();
+			  e.printStackTrace();
 		  }
 		return responseTo;
 	}
@@ -103,8 +94,7 @@ public class ExpenseCalculator
 		        		}
 		        	} else {
 		        		income.setSpent(transaction.getAmount());
-		        	}
-		        	
+		        	}        	
 		        }	 
 		        monthlyExpenses.put(yearMonth,income);
 		    } else {
@@ -129,9 +119,7 @@ public class ExpenseCalculator
 		        			
 		        		} else {
 		        			totalSpent = transaction.getAmount() + income.getSpent(); 
-		        			//&& (transaction.getRawMerchant().contains("DUNKIN") || transaction.getRawMerchant().contains("Krispy"))
 		        		}
-		        		
 		        	} else if(option == 2){
 		        		if(transaction.getRawMerchant().contains("CC PAYMENT")) {
 		        			
@@ -194,24 +182,27 @@ public class ExpenseCalculator
 		Scanner reader = new Scanner(System.in);  // Reading from System.in
 		System.out.println("Enter a number: ");
 		int n = reader.nextInt(); 
-		
-		switch(n){
-		case 1 : 
-				 monthlyExpenses = expenseCalc.getMontlyExpenses(response,1);	
-					break;
-		case 2 : 
-				 monthlyExpenses = expenseCalc.getMontlyExpenses(response,2);	
-					break;
-		case 3 : 
-				 monthlyExpenses = expenseCalc.getMontlyExpenses(response,3);
-				 	break;
-		default : System.out.println("Not a Valid Input!");
-					break;
-		}
-		
-		aggregated = expenseCalc.getAvgofTransactions(monthlyExpenses);
-		for(AggregatedTO aggregatedTO : aggregated){
-			System.out.println("Month:"+aggregatedTO.getMonth()+"- Spent:"+aggregatedTO.getIncomeTO().getSpent()+"-Income:"+aggregatedTO.getIncomeTO().getIncome());
+		if(response!=null){
+			switch(n){
+			case 1 : 
+					 monthlyExpenses = expenseCalc.getMontlyExpenses(response,1);	
+						break;
+			case 2 : 
+					 monthlyExpenses = expenseCalc.getMontlyExpenses(response,2);	
+						break;
+			case 3 : 
+					 monthlyExpenses = expenseCalc.getMontlyExpenses(response,3);
+					 	break;
+			default : System.out.println("Not a Valid Input!");
+						break;
+			}
+			
+			aggregated = expenseCalc.getAvgofTransactions(monthlyExpenses);
+			for(AggregatedTO aggregatedTO : aggregated){
+				System.out.println("Month:"+aggregatedTO.getMonth()+"- Spent:"+aggregatedTO.getIncomeTO().getSpent()+"-Income:"+aggregatedTO.getIncomeTO().getIncome());
+			}
+		} else {
+			System.out.println("No Transactions Found..!!!");
 		}
 		
     }
